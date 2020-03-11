@@ -1,0 +1,59 @@
+@startuml
+
+package Sample  {
+class ControllerRoc {
+ +Label : aucLabel
+ +ImageView : imageView
+ +Roc : roc
+ +void fromFile()
+ +void generateRandom()
+}
+
+class Roc {
++int : positive_examples_number
++int : negative_examples_number
++Roc(final double[] score, final boolean[] true_alert)
++Roc(final String file_path)
++List<CurveCoordinates> : computeRocPoints()
++List<CurveCoordinates> : computeRocPointsAndGenerateCurve()
++double : computeAUC()
++double : trapezoidArea()
+}
+
+class CurveCoordinates{
++double : x_axis
++double : y_axis
++CurveCoordinates()
++double : getXAxis()
++double : getYAxis()
++void : setXAxis()
++void : setYAxis()
+}
+
+class Point{
++double : score
++boolean : true_alert
++Point()
++int compareTo()
++boolean equals()
++int hashCode()
++double getScore()
+}
+
+class Utils{
++int countPositiveExamples()
++int countNegativeExamples()
+}
+}
+
+
+
+
+Point *-- Utils
+ControllerRoc *-- Roc
+Roc *-- Point
+Roc *-- CurveCoordinates
+
+
+
+@enduml
