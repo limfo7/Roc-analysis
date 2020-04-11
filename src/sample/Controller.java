@@ -2,23 +2,35 @@ package sample;
 
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
+import javafx.fxml.Initializable;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Window;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.net.URL;
+import java.util.List;
 import java.util.Random;
+import java.util.ResourceBundle;
 import java.util.Scanner;
 
-public class Controller extends Window {
+public class Controller extends Window implements Initializable {
     public Label aucLabel;
-    public ImageView imageView;
+    //public LineChart chart;
+    public Pane pane;
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+    }
 
     public void fromFile(ActionEvent actionEvent) throws FileNotFoundException {
-
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Выбор файла");
         FileChooser.ExtensionFilter extFilter =
@@ -26,19 +38,31 @@ public class Controller extends Window {
         fileChooser.getExtensionFilters().add(extFilter);
         File file = fileChooser.showOpenDialog(this);
         if (file != null) {
-            System.out.println("zzzz:"+file);
+            System.out.println("zzzz:" + file);
             Scanner scanner = new Scanner(file);
 
             Roc roc = new Roc(file.getName());
-            roc.computeRocPointsAndGenerateCurve("Data.png");
-
-            Image image = new Image("file:Data.png");
-            imageView.setImage(image);
-
+            drawChart(roc.computeRocPointsAndGenerateCurve());
             aucLabel.setText("AUC = " + roc.computeAUC());
         }
+    }
 
+    private void drawChart(List<CurveCoordinates> points) {
+        final NumberAxis xAxis = new NumberAxis();
+        xAxis.setLabel("False Alarm");
+        final NumberAxis yAxis = new NumberAxis();
+        yAxis.setLabel("True Detection");
 
+        final LineChart<Number,Number> chart =
+                new LineChart<Number,Number>(xAxis,yAxis);
+        XYChart.Series series = new XYChart.Series();
+        series.setName("Roc-curve");
+        for (CurveCoordinates coordinates : points) {
+            series.getData().add(new XYChart.Data(coordinates.getXAxis(), coordinates.getYAxis()));
+        }
+        chart.getData().add(series);
+
+        pane.getChildren().setAll(chart);
     }
 
     public void generateRandom(ActionEvent actionEvent) {
@@ -56,11 +80,10 @@ public class Controller extends Window {
         }
 
         Roc roc = new Roc(score, true_alert);
-        roc.computeRocPointsAndGenerateCurve("Data.png");
-
-        Image image = new Image("file:Data.png");
-        imageView.setImage(image);
+        drawChart(roc.computeRocPointsAndGenerateCurve());
 
         aucLabel.setText("AUC = " + roc.computeAUC());
     }
+
+
 }

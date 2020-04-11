@@ -106,8 +106,7 @@ public class Roc {
         return roc_points;
     }
 
-    public final List<CurveCoordinates> computeRocPointsAndGenerateCurve(
-            final String filename) {
+    public final List<CurveCoordinates> computeRocPointsAndGenerateCurve() {
         List<CurveCoordinates> roc_coordinates = this.computeRocPoints();
         double[] true_detection = new double[roc_coordinates.size()];
         double[] false_alarm = new double[roc_coordinates.size()];
@@ -121,14 +120,6 @@ public class Roc {
                 null,
                 false_alarm,
                 true_detection);
-        try {
-            BitmapEncoder.saveBitmapWithDPI(chart,
-                    filename,
-                    BitmapEncoder.BitmapFormat.PNG,
-                    300);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         return roc_coordinates;
     }
 
