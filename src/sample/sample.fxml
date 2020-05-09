@@ -1,31 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<GridPane alignment="center" hgap="10" prefHeight="501.0" prefWidth="643.0" vgap="10" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
-   <columnConstraints>
-      <ColumnConstraints />
-   </columnConstraints>
-   <rowConstraints>
-      <RowConstraints />
-   </rowConstraints>
-   <children>
-      <AnchorPane prefHeight="508.0" prefWidth="647.0">
-         <children>
-            <Button layoutX="54.0" layoutY="14.0" mnemonicParsing="false" onAction="#fromFile" prefHeight="25.0" prefWidth="268.0" text="Из файла" textAlignment="CENTER" />
-            <Button layoutX="322.0" layoutY="14.0" mnemonicParsing="false" onAction="#generateRandom" prefHeight="25.0" prefWidth="268.0" text="Случайным образом" textAlignment="CENTER" />
-            <Label fx:id="aucLabel" layoutX="307.0" layoutY="467.0" text="AUC" textAlignment="CENTER">
-               <font>
-                  <Font name="System Bold Italic" size="14.0" />
-               </font></Label>
-            <Pane fx:id="pane" layoutX="17.0" layoutY="39.0" prefHeight="421.0" prefWidth="610.0" />
-         </children></AnchorPane>
-   </children>
-</GridPane>
+<AnchorPane prefHeight="579.0" prefWidth="1013.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+    <Button layoutX="29.0" layoutY="14.0" mnemonicParsing="false" onAction="#fromFile" prefHeight="25.0" prefWidth="147.0" text="Из файла" textAlignment="CENTER" />
+    <Button layoutX="177.0" layoutY="14.0" mnemonicParsing="false" onAction="#generateRandom" prefHeight="25.0" prefWidth="153.0" text="Случайным образом" textAlignment="CENTER" />
+    <Label fx:id="aucLabel" layoutX="15.0" layoutY="440.0" text="AUC" textAlignment="CENTER">
+        <font>
+            <Font name="System Bold Italic" size="14.0" />
+        </font>
+    </Label>
+    <Pane fx:id="pane" layoutX="6.0" layoutY="39.0" prefHeight="290.0" prefWidth="633.0" />
+   <TableView fx:id="aucTable" layoutX="14.0" layoutY="460.0" prefHeight="108.0" prefWidth="268.0">
+     <columns>
+       <TableColumn fx:id="aucInterval" prefWidth="115.0" text="Интервал AUC " />
+       <TableColumn fx:id="modelQuality" minWidth="4.0" prefWidth="111.0" text="Качество модели " />
+     </columns>
+   </TableView>
+   <Button layoutX="291.0" layoutY="460.0" mnemonicParsing="false" onAction="#saveImage" text="Сохранить график" />
+   <TableView fx:id="tableValueChart" layoutX="666.0" layoutY="26.0" prefHeight="547.0" prefWidth="280.0">
+     <columns>
+       <TableColumn prefWidth="140.0" text="x_axis" fx:id="x_axis" />
+       <TableColumn fx:id="y_axis" prefWidth="139.0" text="y_axis" />
+     </columns>
+   </TableView>
+</AnchorPane>

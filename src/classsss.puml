@@ -7,7 +7,24 @@ class ControllerRoc {
  +Roc : roc
  +void fromFile()
  +void generateRandom()
- +void tableChart(List<CurveCoordinates> points,LineChart<Number, Number> chart,XYChart.Series series,XYChart.Series CriticalLane)
+ +void saveImage()
+}
+
+class DataStructureTable {
+    +private double aucIntervalMin
+    +private double aucIntervalMax
+    +private String modelQuality
+    +private String aucInterval
+
+        public String getAucInterval()
+        public void setAucInterval(String aucInterval)
+        public double getAucIntervalMax()
+        public void setAucIntervalMax(double aucIntervalMax)
+        public double getAucIntervalMin()
+        public void setAucIntervalMin(double aucIntervalMin)
+        public String getModelQuality()
+        public void setModelQuality(String modelQuality)
+        public String aucInterval()
 }
 
 class Roc {
@@ -19,6 +36,7 @@ class Roc {
 +List<CurveCoordinates> : computeRocPointsAndGenerateCurve()
 +double : computeAUC()
 +double : trapezoidArea()
++List<CurveCoordinates> computeRocPointsAndGenerateCurveSaveImage(final String filename)
 }
 
 class CurveCoordinates{
@@ -54,7 +72,7 @@ Point *-- Utils
 ControllerRoc *-- Roc
 Roc *-- Point
 Roc *-- CurveCoordinates
-
+ControllerRoc *-- DataStructureTable
 
 
 @enduml

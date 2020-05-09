@@ -164,4 +164,31 @@ public class Roc {
         return (base * height_average);
     }
 
+    public final List<CurveCoordinates> computeRocPointsAndGenerateCurveSaveImage(
+            final String filename) {
+        List<CurveCoordinates> roc_coordinates = this.computeRocPoints();
+        double[] true_detection = new double[roc_coordinates.size()];
+        double[] false_alarm = new double[roc_coordinates.size()];
+        for (int i = 0; i < roc_coordinates.size(); i++) {
+            true_detection[i] = roc_coordinates.get(i).getYAxis();
+            false_alarm[i] = roc_coordinates.get(i).getXAxis();
+        }
+        XYChart chart = QuickChart.getChart("Roc curve",
+                "False Alarm",
+                "True Detection",
+                null,
+                false_alarm,
+                true_detection);
+        try {
+            BitmapEncoder.saveBitmapWithDPI(chart,
+                    filename,
+                    BitmapEncoder.BitmapFormat.PNG,
+                    300);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return roc_coordinates;
+    }
+
+
 }
